@@ -3,12 +3,15 @@ package com.mafuyu404.mafuyusflashlight.event;
 import com.mafuyu404.mafuyusflashlight.Mafuyusflashlight;
 import com.mafuyu404.mafuyusflashlight.init.ShaderManager;
 import com.mafuyu404.mafuyusflashlight.init.Utils;
+import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +57,11 @@ public class ClientEvent {
             currentOffsetX = currentOffsetX * 0.5f + offsetDeltaX;
             currentOffsetY = currentOffsetY * 0.5f + offsetDeltaY;
 
+            if (mc.options.getCameraType() == CameraType.THIRD_PERSON_FRONT) {
+                currentOffsetX = 0;
+                currentOffsetY = 0;
+            }
+
             float radius = mc.getWindow().getHeight() * 0.48f;
             if (mc.options.getCameraType() != CameraType.FIRST_PERSON) radius /= 2;
             float finalRadius = radius;
@@ -72,6 +80,17 @@ public class ClientEvent {
             currentOffsetY = 0.0f;
             previousYaw = player.getYRot();
             previousPitch = player.getXRot();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onKey(InputEvent.Key event) {
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+        if (event.getKey() == KeyBindings.FLASHLIGHT_SWITCH.getKey().getValue()) {
+            if (event.getAction() == InputConstants.PRESS) {
+                Utils.toggleFlashlight(player);
+            }
         }
     }
 }

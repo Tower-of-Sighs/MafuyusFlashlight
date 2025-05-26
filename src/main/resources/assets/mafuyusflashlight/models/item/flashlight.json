@@ -1,6 +1,6 @@
 {
     "textures": {
-        "flashlight": "mafuyusflashlight:item/flashlight_off"
+        "flashlight": "mafuyusflashlight:item/flashlight"
     },
     "elements": [
         {
@@ -58,7 +58,7 @@
             "predicate": {
                 "mafuyusflashlight:powered": 1
             },
-            "model": "mafuyusflashlight:item/flashlight_off"
+            "model": "mafuyusflashlight:item/flashlight_on"
         }
     ]
 }

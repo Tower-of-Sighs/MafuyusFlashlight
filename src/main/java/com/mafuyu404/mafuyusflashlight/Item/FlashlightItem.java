@@ -24,7 +24,7 @@ public class FlashlightItem extends Item {
         return super.use(level, player, hand);
     }
 
-    private void togglePowered(ItemStack stack) {
+    public static void togglePowered(ItemStack stack) {
         CompoundTag nbt = stack.getOrCreateTag();
         int powered = nbt.getInt("powered");
         nbt.putInt("powered", powered ^ 1); // 在0和1之间切换

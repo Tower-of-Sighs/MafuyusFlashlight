@@ -1,6 +1,6 @@
 {
     "textures": {
-        "flashlight": "mafuyusflashlight:item/flashlight"
+        "flashlight": "mafuyusflashlight:item/flashlight_on"
     },
     "elements": [
         {

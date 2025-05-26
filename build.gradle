@@ -157,6 +157,15 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        // Patchouli
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
 }
 
 dependencies {
@@ -189,6 +198,9 @@ dependencies {
     implementation fg.deobf("curse.maven:oculus-581495:6020952")
 
     implementation fg.deobf("curse.maven:curios-309927:5843594")
+
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.20.0.104")
+    implementation fg.deobf("mezz.jei:jei-1.20.1-forge:15.20.0.104")
 
 }
 
