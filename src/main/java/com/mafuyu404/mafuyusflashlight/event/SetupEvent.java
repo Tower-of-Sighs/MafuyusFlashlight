@@ -3,6 +3,7 @@ package com.mafuyu404.mafuyusflashlight.event;
 import com.mafuyu404.mafuyusflashlight.Item.FlashlightItem;
 import com.mafuyu404.mafuyusflashlight.Mafuyusflashlight;
 import com.mafuyu404.mafuyusflashlight.compat.CuriosCompat;
+import com.mafuyu404.mafuyusflashlight.compat.FlashlightRender;
 import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
 import com.mafuyu404.mafuyusflashlight.registry.ModItems;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -26,6 +27,7 @@ public class SetupEvent {
                     (stack, world, entity, seed) -> FlashlightItem.getPowered(stack)
             );
         });
+        event.enqueueWork(CuriosCompat::init);
     }
 
     @SubscribeEvent

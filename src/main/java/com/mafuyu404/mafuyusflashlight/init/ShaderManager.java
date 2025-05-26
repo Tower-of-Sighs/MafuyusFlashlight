@@ -28,13 +28,7 @@ public class ShaderManager {
      */
 //    @SubscribeEvent
 //    public static void onAddReloadListener(AddReloadListenerEvent event) {
-//        if (event.getReloadListeners() != null && mc.getResourceManager() instanceof ReloadableResourceManager) {
-//            ReloadableResourceManager manager = (ReloadableResourceManager) mc.getResourceManager();
-//            manager.registerReloadListener((manager1, prepareProfiler, applyProfiler, backgroundExecutor, gameExecutor) -> {
-//                reloadAll();
-//                return null;
-//            });
-//        }
+
 //    }
 
     public static List<PostPass> getShader(String name) {

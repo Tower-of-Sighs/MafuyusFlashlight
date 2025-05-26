@@ -3,6 +3,7 @@ package com.mafuyu404.mafuyusflashlight.event;
 import com.mafuyu404.mafuyusflashlight.Mafuyusflashlight;
 import com.mafuyu404.mafuyusflashlight.init.ShaderManager;
 import com.mafuyu404.mafuyusflashlight.init.Utils;
+import com.mafuyu404.mafuyusflashlight.registry.Config;
 import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
@@ -57,7 +58,7 @@ public class ClientEvent {
             currentOffsetX = currentOffsetX * 0.5f + offsetDeltaX;
             currentOffsetY = currentOffsetY * 0.5f + offsetDeltaY;
 
-            if (mc.options.getCameraType() == CameraType.THIRD_PERSON_FRONT) {
+            if (mc.options.getCameraType() == CameraType.THIRD_PERSON_FRONT || Config.ENABLE_FIXED_FLASHLIGHT.get()) {
                 currentOffsetX = 0;
                 currentOffsetY = 0;
             }
@@ -71,6 +72,7 @@ public class ClientEvent {
                 if (effect.getName().equals("mafuyusflashlight:flashlight")) {
                     effect.safeGetUniform("Offset").set(currentOffsetX, -currentOffsetY);
                     effect.safeGetUniform("Radius").set(finalRadius);
+                    effect.safeGetUniform("IntensityAmount").set(Config.LIGHT_INTENSITY.get());
                 }
             });
         } else {

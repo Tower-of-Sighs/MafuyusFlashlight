@@ -13,18 +13,18 @@ void main() {
     vec4 color = texture(DiffuseSampler, texCoord);
     vec3 finalColor = vec3(color);
 
-    // 获取屏幕分辨率
+    // 屏幕分辨率
     vec2 texSize = textureSize(DiffuseSampler, 0);
-    // 计算像素坐标
+    // 坐标
     vec2 pixelCoord = texCoord * texSize;
-    // 计算中心点（屏幕中心 + 偏移量）
+    // 中心点（屏幕中心 + 偏移量）
     vec2 center = texSize * 0.5 + Offset;
     float dist = distance(pixelCoord, center);
 
-    // 半径和边缘（像素单位）
+    // 边缘过渡
     float edge = Radius / 3;
 
-    // 平滑过渡因子
+    // 平滑过渡
     float factor = smoothstep(Radius, Radius - edge, dist);
 
     if (factor > 0.0) {

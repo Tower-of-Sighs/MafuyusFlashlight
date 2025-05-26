@@ -1,6 +1,8 @@
 package com.mafuyu404.mafuyusflashlight.compat;
 
+import com.mafuyu404.mafuyusflashlight.registry.ModItems;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 
 public class CuriosCompat {
@@ -9,6 +11,7 @@ public class CuriosCompat {
 
     public static void init() {
         INSTALLED = ModList.get().isLoaded(MOD_ID);
+        if (INSTALLED) FlashlightRender.register();
     }
 
     public static boolean isUsingCuriosFlashlight(Player player) {
@@ -22,5 +25,12 @@ public class CuriosCompat {
         if (INSTALLED) {
             CuriosCompatInner.toggleCuriosFlashlight(player);
         }
+    }
+
+    public static ItemStack getFirstFlashlight(Player player) {
+        if (INSTALLED) {
+            return CuriosCompatInner.getFirstFlashlight(player);
+        }
+        return ModItems.FLASHLIGHT.get().getDefaultInstance();
     }
 }
