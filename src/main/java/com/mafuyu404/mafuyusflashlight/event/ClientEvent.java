@@ -5,6 +5,7 @@ import com.mafuyu404.mafuyusflashlight.init.ShaderManager;
 import com.mafuyu404.mafuyusflashlight.init.Utils;
 import com.mafuyu404.mafuyusflashlight.registry.Config;
 import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
+import com.mafuyu404.mafuyusflashlight.render.VolumetricLightRenderer;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -38,43 +39,53 @@ public class ClientEvent {
         float deltaSeconds = Math.max((deltaTime / 1000.0f), 0.001f);
         lastTickTime = currentTime;
 
-        if (Utils.isUsingFlashlight(player)) {
-            ShaderManager.loadShader("flashlight", "shaders/post/flashlight.json");
+        boolean isUsingFlashlight = Utils.isUsingFlashlight(player);
 
-            // 视角变化量
-            float currentYaw = player.getYRot();
-            float currentPitch = player.getXRot();
-            float deltaYaw = Mth.wrapDegrees(currentYaw - previousYaw);
-            float deltaPitch = Mth.wrapDegrees(currentPitch - previousPitch);
-            previousYaw = currentYaw;
-            previousPitch = currentPitch;
+        if (isUsingFlashlight) {
+            // 根据配置选择渲染模式
+            if (Config.USE_VOLUMETRIC_LIGHTING.get()) {
+                // 使用体积光照模式
+                ShaderManager.clean("flashlight"); // 清理后处理着色器
+                // 体积光照在VolumetricRenderEvent中处理
+            } else {
+                // 使用传统后处理模式
+                ShaderManager.loadShader("flashlight", "shaders/post/flashlight.json");
 
-            float sensitivity = 70.0f;
-            // 反向偏移
-            float offsetDeltaX = -deltaYaw * sensitivity * deltaSeconds;
-            float offsetDeltaY = -deltaPitch * sensitivity * deltaSeconds;
+                // 视角变化量
+                float currentYaw = player.getYRot();
+                float currentPitch = player.getXRot();
+                float deltaYaw = Mth.wrapDegrees(currentYaw - previousYaw);
+                float deltaPitch = Mth.wrapDegrees(currentPitch - previousPitch);
+                previousYaw = currentYaw;
+                previousPitch = currentPitch;
 
-            // 衰减
-            currentOffsetX = currentOffsetX * 0.5f + offsetDeltaX;
-            currentOffsetY = currentOffsetY * 0.5f + offsetDeltaY;
+                float sensitivity = 70.0f;
+                // 反向偏移
+                float offsetDeltaX = -deltaYaw * sensitivity * deltaSeconds;
+                float offsetDeltaY = -deltaPitch * sensitivity * deltaSeconds;
 
-            if (mc.options.getCameraType() == CameraType.THIRD_PERSON_FRONT || Config.ENABLE_FIXED_FLASHLIGHT.get()) {
-                currentOffsetX = 0;
-                currentOffsetY = 0;
-            }
+                // 衰减
+                currentOffsetX = currentOffsetX * 0.5f + offsetDeltaX;
+                currentOffsetY = currentOffsetY * 0.5f + offsetDeltaY;
 
-            float radius = mc.getWindow().getHeight() * 0.48f;
-            if (mc.options.getCameraType() != CameraType.FIRST_PERSON) radius /= 2;
-            float finalRadius = radius;
-
-            ShaderManager.getShader("flashlight").forEach(postPass -> {
-                EffectInstance effect = postPass.getEffect();
-                if (effect.getName().equals("mafuyusflashlight:flashlight")) {
-                    effect.safeGetUniform("Offset").set(currentOffsetX, -currentOffsetY);
-                    effect.safeGetUniform("Radius").set(finalRadius);
-                    effect.safeGetUniform("IntensityAmount").set(Config.LIGHT_INTENSITY.get());
+                if (mc.options.getCameraType() == CameraType.THIRD_PERSON_FRONT || Config.ENABLE_FIXED_FLASHLIGHT.get()) {
+                    currentOffsetX = 0;
+                    currentOffsetY = 0;
                 }
-            });
+
+                float radius = mc.getWindow().getHeight() * 0.48f;
+                if (mc.options.getCameraType() != CameraType.FIRST_PERSON) radius /= 2;
+                float finalRadius = radius;
+
+                ShaderManager.getShader("flashlight").forEach(postPass -> {
+                    EffectInstance effect = postPass.getEffect();
+                    if (effect.getName().equals("mafuyusflashlight:flashlight")) {
+                        effect.safeGetUniform("Offset").set(currentOffsetX, -currentOffsetY);
+                        effect.safeGetUniform("Radius").set(finalRadius);
+                        effect.safeGetUniform("IntensityAmount").set(Config.LIGHT_INTENSITY.get().floatValue());
+                    }
+                });
+            }
         } else {
             ShaderManager.clean("flashlight");
 

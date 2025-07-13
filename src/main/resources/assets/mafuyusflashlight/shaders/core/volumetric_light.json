@@ -1,0 +1,30 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "src_alpha",
+    "dstrgb": "one"
+  },
+  "vertex": "mafuyusflashlight:volumetric_light",
+  "fragment": "mafuyusflashlight:volumetric_light",
+  "attributes": [
+    "Position",
+    "Color",
+    "UV0",
+    "UV2"
+  ],
+  "samplers": [
+    { "name": "DiffuseSampler" },
+    { "name": "DepthSampler" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "LightPosition", "type": "float", "count": 3, "values": [ 0.0, 0.0, 0.0 ] },
+    { "name": "LightDirection", "type": "float", "count": 3, "values": [ 0.0, 0.0, 1.0 ] },
+    { "name": "LightIntensity", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "LightRange", "type": "float", "count": 1, "values": [ 32.0 ] },
+    { "name": "ConeAngle", "type": "float", "count": 1, "values": [ 45.0 ] },
+    { "name": "Time", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "ScreenSize", "type": "float", "count": 2, "values": [ 1920.0, 1080.0 ] }
+  ]
+}

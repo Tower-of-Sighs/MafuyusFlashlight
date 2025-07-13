@@ -6,6 +6,7 @@ import com.mafuyu404.mafuyusflashlight.compat.CuriosCompat;
 import com.mafuyu404.mafuyusflashlight.compat.FlashlightRender;
 import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
 import com.mafuyu404.mafuyusflashlight.registry.ModItems;
+import com.mafuyu404.mafuyusflashlight.render.VolumetricLightRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +38,9 @@ public class SetupEvent {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(CuriosCompat::init);
+        event.enqueueWork(() -> {
+            FlashlightRender.register();
+            VolumetricLightRenderer.init();
+        });
     }
 }
