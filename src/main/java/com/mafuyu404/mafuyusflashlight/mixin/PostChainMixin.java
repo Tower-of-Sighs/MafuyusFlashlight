@@ -10,7 +10,9 @@ import java.util.List;
 @Mixin(value = PostChain.class)
 @Implements(@Interface(iface = PostChainAccessor.class, prefix = "lazy$")) // 动态附加接口
 public class PostChainMixin implements PostChainAccessor {
-    @Shadow @Final private List<PostPass> passes;
+    @Shadow
+    @Final
+    private List<PostPass> passes;
 
     public List<PostPass> getPasses() {
         return passes;

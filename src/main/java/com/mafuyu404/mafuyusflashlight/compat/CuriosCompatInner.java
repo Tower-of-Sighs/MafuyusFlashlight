@@ -22,6 +22,7 @@ public class CuriosCompatInner {
         });
         return result[0];
     }
+
     public static void toggleCuriosFlashlight(Player player) {
         CuriosApi.getCuriosInventory(player).ifPresent(iCuriosItemHandler -> {
             iCuriosItemHandler.findCurios(Utils::isFlashlight).forEach(slotResult -> {
@@ -29,6 +30,7 @@ public class CuriosCompatInner {
             });
         });
     }
+
     public static ItemStack getFirstFlashlight(Player player) {
         ItemStack[] itemStack = {ModItems.FLASHLIGHT.get().getDefaultInstance()};
         CuriosApi.getCuriosInventory(player).ifPresent(iCuriosItemHandler -> {

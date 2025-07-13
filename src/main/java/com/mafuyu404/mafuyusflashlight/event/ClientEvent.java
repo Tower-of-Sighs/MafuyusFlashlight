@@ -5,7 +5,6 @@ import com.mafuyu404.mafuyusflashlight.init.ShaderManager;
 import com.mafuyu404.mafuyusflashlight.init.Utils;
 import com.mafuyu404.mafuyusflashlight.registry.Config;
 import com.mafuyu404.mafuyusflashlight.registry.KeyBindings;
-import com.mafuyu404.mafuyusflashlight.render.VolumetricLightRenderer;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;

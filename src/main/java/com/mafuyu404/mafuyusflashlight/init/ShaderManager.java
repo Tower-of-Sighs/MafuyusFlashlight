@@ -30,7 +30,6 @@ public class ShaderManager {
 //    public static void onAddReloadListener(AddReloadListenerEvent event) {
 
 //    }
-
     public static List<PostPass> getShader(String name) {
         PostChainAccessor postChain = (PostChainAccessor) CHAINS.get(name);
         return postChain.getPasses();
@@ -39,6 +38,7 @@ public class ShaderManager {
     public static void loadShader(String name, String jsonPath) {
         if (!CHAINS.containsKey(name)) CHAINS.put(name, createPostChain(jsonPath));
     }
+
     public static boolean isLoading(String name) {
         return CHAINS.containsKey(name);
     }

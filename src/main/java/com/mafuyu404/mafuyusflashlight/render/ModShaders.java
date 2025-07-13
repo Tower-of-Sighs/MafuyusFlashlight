@@ -22,12 +22,12 @@ public class ModShaders {
     @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent event) throws IOException {
         event.registerShader(
-            new ShaderInstance(
-                event.getResourceProvider(),
-                new ResourceLocation(Mafuyusflashlight.MODID, "volumetric_light"),
-                DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP
-            ),
-            shader -> volumetricLightShader = shader
+                new ShaderInstance(
+                        event.getResourceProvider(),
+                        new ResourceLocation(Mafuyusflashlight.MODID, "volumetric_light"),
+                        DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP
+                ),
+                shader -> volumetricLightShader = shader
         );
     }
 }
